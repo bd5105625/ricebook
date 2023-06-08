@@ -1,0 +1,15 @@
+.float-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    border: 3px solid #fff;
+    padding: 20px;
+}
+.float-child {
+
+    width: 80%;
+    float: left;
+    padding: 10px;
+    border: 1px solid gray;
+
+}

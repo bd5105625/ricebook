@@ -1,0 +1,39 @@
+.float-container-profile {
+    display: grid;
+    grid-template-columns: 30% 30%;
+    margin: auto;
+
+    border: 3px solid #fff;
+    padding: 20px;
+    justify-content: center;
+    margin-top: 30px;
+    
+    /* background-color: #D1D5DB; */
+}
+.float-child {
+
+    width: 80%;
+    float: left;
+    padding: 10px;
+    border: 1px solid gray;
+    margin-left: auto;
+    margin-right: auto;
+    /* justify-content: center; */
+    /* margin: auto; */
+    /* set center */
+
+}
+.information {
+    margin-top: 5px;
+    border: 5px solid rgb(25, 121, 186);
+}
+item {
+    margin-top: 10px;
+    border: 5px solid rgb(25, 121, 186);
+
+    /* margin: auto; */
+
+    /* margin-left: auto;
+    margin-right: auto; */
+    /* justify-content: center */
+}
