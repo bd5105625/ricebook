@@ -37,44 +37,6 @@ const Main_Page = () => {
             // console.log("getpost", newPost)
             // dispatch(updatePost({newPost}))
         })
-        // if (Page_State === 'LOGIN'){
-
-        //     let index = UserNameList.findIndex((name) => name === Account)+1
-        //     const temp1 = UserPostList.filter((post) => post.userId === index).flat()
-        //     const selfPost = temp1.map((post) => {
-        //         return {...post, name:Account, isComment:false}
-        //     })
-        //     const currentPost = posts.filter((post) => post.userId ===  0)
-        //     const newPost = followers.map((follower)=> {
-        //         let temp = UserPostList.filter((post) => post.userId === follower.id)
-        //         temp = temp.map((post) => {
-        //             return {...post, name:follower.name, isComment:false}
-        //         })
-        //         return temp
-                
-        //     }).flat()
-        //     if (currentPost.length !== 0){
-        //         for (let i = currentPost.length-1;i >= 0;i--){
-        //             selfPost.unshift(currentPost[i])
-        //         }
-        //     }
-        //     for (let i = selfPost.length-1;i >= 0;i--){
-        //         newPost.unshift(selfPost[i])
-        //     }
-
-        //     dispatch(updatePost({newPost}))
-        // }
-        // else if ( Page_State === 'SIGNUP') {
-        //     const newPost = followers.map((follower)=> {
-        //         let temp = UserPostList.filter((post) => post.userId === follower.id)
-        //         temp = temp.map((post) => {
-        //             return {...post, name:follower.name, isComment:false}
-        //         })
-        //         return temp
-                
-        //     }).flat()
-        //     dispatch(updatePost({newPost}))
-        // }
         
         
     }
@@ -341,22 +303,6 @@ const Main_Page = () => {
         </div>
     );
 }
-
-
-// function addFollower() {
-//     const add_btn = document.getElementById("follower-input")
-//     if (add_btn.value) {
-//         total_follower += 1
-//         console.log(total_follower)
-//         console.log(add_btn.value)
-//         add_btn.value = ""
-//     }
-// }
-
-
-
-
-
 
 function clear_post () {
     const text = document.getElementById('message')
