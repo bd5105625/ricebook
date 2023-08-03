@@ -47,10 +47,8 @@ const container = document.getElementById('root')
 const root = ReactDOM.createRoot(container)
 root.render(
     <React.StrictMode>
-        {/* initialize local storage */}
         <Local/>
         <Provider  store={store}>
-            {/* <div className="bg-white rounded-xl overflow-hidden shadow-lg p-5 flex space-x-5"> */}
             <App />
         </Provider>
     </React.StrictMode>,
