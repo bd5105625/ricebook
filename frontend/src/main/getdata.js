@@ -201,15 +201,8 @@ export const ReadUser = (props) => {
             <h1 className='text'>Current Following</h1>
             <div className="grid gap-6 mb-6 md:grid-cols-2">
                 {curr_Follower_Info.map((user,index) => {
-                    // return (
-                    //     <div>
 
-                    //         <h1>{user}</h1>
-                    //         <h1>{index}</h1>
-                    //     </div>
-                    // )
                     return (
-                        // <div id={user.id} key={user.id} className="mb-6 ">
                         <div key={index} className="mb-6 ">
 
                             
@@ -218,9 +211,7 @@ export const ReadUser = (props) => {
                             <h1 className='text'>{user.username}</h1>
                             <h5> {user.headline}</h5>
                             <button 
-                                // className="text-black bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"    
                                 className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                                // className="button w-full rounded-full bg-gray-400 px-4 py-2 text-black">
                                 onClick={()=>handleUnFollow(user.username)}>
                                 unfollow
                             </button>
@@ -235,8 +226,6 @@ export const ReadUser = (props) => {
                 </div>
 
                 <button type="button" id="add_follower" onClick={Addnewfollower}
-                        // className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        // className="button w-full rounded-full bg-gray-200 px-4 py-2 text-black">
                         className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                             Add
                 </button>

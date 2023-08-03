@@ -11,13 +11,9 @@ const Profile = () => {
     const original = useSelector((state)=>state.register)
     const {Account, Avatar} = useSelector((state)=>state.register)
     const dispatch = useDispatch()
-    // function UpdateInformation (event) {
     const UpdateInformation = async (event) => {
         
-        // dispatch = useDispatch();
         event.preventDefault()
-        // console.log("here")
-        // const update_displayname = document.getElementById('Display_update')
         const update_phone = document.getElementById('Phone_update')
         const update_email = document.getElementById('Email_update')
         const update_zip = document.getElementById('Zip_update')
@@ -81,30 +77,13 @@ const Profile = () => {
                 .then((res) => {
                     console.log("Avatar updated", res.data)
             })
-            // console.log(res.data.url_image)
-            // console.log(url)
-            // document.getElementById('avatar').src = url
+
         })
 
         
     }
 
-        // formData.append('image', file)
-        // const uploadFile = document.getElementById('user_avatar')
-        // let formData = new FormData()
-        // formData.append('file', uploadFile.files[0])
-        // // formData.set('avatar', uploadFile.files[0])
-        // // let formData = new FormData()
-        // // formData.set('file', uploadFile.files[0])
-        // // console.log('let', formData)
-        // await axios.post("http://localhost:3000/avatar", formData)
-        //     .then((res) => {
-        //             alert("Image uploaded")
-        //             console.log("formData", formData)
-        //             console.log("res", res)
-        //         }
-        // )
-    // }
+
 
 
 
@@ -160,24 +139,6 @@ const Profile = () => {
                             <div>
                                 <h2 className='text-center'>Update Your Information</h2>
                             </div>
-                            {/* <div>
-                                <label htmlFor="Account_update"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Account
-                                </label>
-                                <input type="text" id="Account_update"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="John" ></input>
-                            </div> */}
-                            {/* <div>
-                                <label htmlFor="Display_update"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Display Name
-                                </label>
-                                <input type="tel" id="Display_update"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Name" ></input>
-                            </div> */}
                             <div>
                                 <label htmlFor="Zip_update"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -242,11 +203,9 @@ const Profile = () => {
 
 const CreateInformation = () => {
     const { ZipCode, Phone, Email} = useSelector((state)=>state.register)
-    // const {account, phone, email,display, birth, pass} = props
     return (
         <div className="">
-            {/* <h4 id="displayname_info">Display Name: {DisplayName}</h4> */}
-            {/*<h1 id="display_info">Display Name: {display}</h1>*/}
+
             <h4>Your Information</h4>
             <div>
 

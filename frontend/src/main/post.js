@@ -6,12 +6,9 @@ import './main.css'
 import {Comment} from '../feature/post/comment'
 import { clickComment, clickEdit, editText } from '../feature/post/postSlice'
 import axios from 'axios'
-// import ReactPaginate from "https://cdn.skypack.dev/react-paginate@7.1.3";
 import ReactPaginate from 'react-paginate'
-// import ReactPaginate from './page.css'
 
 import { BASE_URL } from '../url'
-// import PaginatedItems from './pagination'
 import './page.css'
 
 
@@ -25,8 +22,6 @@ export function Feed(props) {
     const handleChangeText = async (e,index, _id) => {
         let newText = e.target.value
         dispatch(editText({index:index,text:newText}))
-        // call backend to update text
-        // await axios.put(`http://localhost:3000/articles/${_id}`, {article:newText})
     }
 
     const handleEdit = async (index, _id, newText) => {
@@ -39,7 +34,6 @@ export function Feed(props) {
             if (props.posts[index].isEdit) {
                 console.log("save!")
                 console.log("newText", newText, _id, props.posts[index].author)
-                // await axios.put(`http://localhost:3000/articles/${_id}`, {text:newText}){
                 await axios.put(`${BASE_URL}/articles/${_id}`, {user: props.posts[index].author ,text:newText})
                 .then((res) => {
                     console.log(res)
@@ -100,13 +94,9 @@ export function Feed(props) {
                             <div className='my-3 flex items-center '>
                                 {testAvatar(post.author)}
                                 <h1 className='mx-auto'>{post.author}</h1>
-                                {/* {console.log(index,post.date)} */}
-                                {/* <h4 className='mx-auto'>{post.date.split('T')[0]+" "+ post.date.split('T')[1].split('.')[0]}</h4> */}
                             </div>
                             <div className=''>
-                                {/* <h1>{title}</h1> */}
                                 {post.isEdit ? (
-                                    // <input type="text" id="content">{post.text}</input>
                                     <input type="text" className="w-full rounded-lg border-gray-200 p-3 text-sm" 
                                     value={post.text} onChange={(e)=>handleChangeText(e,index, post._id)} />
                                     ) : (
@@ -119,7 +109,6 @@ export function Feed(props) {
                             <div className="float-post-container post_style"> 
 
                                 <button onClick={() => {
-                                    // dispatch(clickEdit({index}))
                                         handleEdit(index, post._id, post.text)
                                         // test()
                                     }}
@@ -134,7 +123,6 @@ export function Feed(props) {
                                 className="text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                                 { post.isComment ? "Hide Comment" : "Show Comment" }
                                 </button>
-                                {/* { console.log(article_id,isComment)} */}
                             </div>
                             <div className=''>
                                 { post.isComment && < Comment post={post} index = {index} author={post.author} comments={post.comments} _id={post._id}/>}
@@ -178,15 +166,12 @@ export function PaginatedItems({ posts, query, itemsPerPage }){
     useEffect(() => {
         // Fetch items from another resources.
         setEndOffset(itemOffset + itemsPerPage);
-        // const endOffset = itemOffset + itemsPerPage;
-        // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
         setPageCount(Math.ceil(posts.length / itemsPerPage));
     }, [itemOffset, itemsPerPage, Followings, posts]);
 
     // Invoke when user click to request another page.
     const handlePageClick = (event) => {
         const newOffset = event.selected * itemsPerPage % posts.length;
-        // console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
         setItemOffset(newOffset);
     };
 

@@ -18,14 +18,12 @@ const Main_Page = () => {
 
     const {posts,followers,amount, originalPosts, isSearch} = useSelector((store) => store.post)
     const {Avatar, DisplayName, Account,Page_State, Headline, Following} = useSelector((store) => store.register)
-    // const [currentUser,setCurrentUser] = useState(post)
     const dispatch = useDispatch()
     const [query, setQuery] = useState('')
 
 
     const getPost = async () => {
-        // console.log("temp",temp, DisplayName)
-        // temp.push("asd")
+
         let todo = {
             follower: Following,
             user: DisplayName
@@ -34,8 +32,7 @@ const Main_Page = () => {
         .then((res) => {
             let newPost = res.data.articles
             dispatch(updatePost({newPost}))
-            // console.log("getpost", newPost)
-            // dispatch(updatePost({newPost}))
+
         })
         
         
@@ -112,8 +109,7 @@ const Main_Page = () => {
             dispatch(new_status(status.value))
             status.value = ''
         })
-        // dispatch(new_status(status.value))
-        // status.value = ''
+
         
     }
 
@@ -171,17 +167,12 @@ const Main_Page = () => {
         
         <div className='bg-gray-400'>
             <div className="float-container">
-                {/* <div></div> */}
                 <div className='bg-white float-child-1 rounded-lg'>
-                    {/* <div className="grid gap-6 mb-6 md:grid-cols-2 "> */}
-                        {/*<div  className='float-container'>*/}
                     <div>
 
                         <div>
                             <Link to={'/'} >
                                 <button type="button" onClick={handleLogout}
-                                        // className="w-full text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                        // className="button w-full px-4 py-2 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-lg shadow-lg text-center">
                                         className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 rounded-full button">
                                     Log out
 
@@ -219,7 +210,6 @@ const Main_Page = () => {
                         </input>
                     </div>
                     <button id="update_button" type="button" onClick={updateStatus}
-                            // className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                             Update Status
                     </button>
@@ -249,7 +239,6 @@ const Main_Page = () => {
                         <div>
                             <img id="preview" className="preview_img" src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s'} height="400" width="300"></img>
                         </div>
-                        {/*<div className="grid gap-6 mb-6 md:grid-cols-2">*/}
 
                         <div className="float-child-post-1 ">
                             <button id="post_text" type="button" onClick={clear_post}
@@ -270,14 +259,7 @@ const Main_Page = () => {
                         <input type="text" id="search_input" onChange={handleSetSearchPost} placeholder="Search Post"
                             className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         </input>
-                        {/* <button onChange={handleSetSearchPost}  id="search_button" type="button"
-                            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                            Search
-                        </button>
-                        <button onClick={handleClearSearchPost}
-                            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                            Cancel
-                        </button> */}
+                        
                     </div>
                 </div>
             </div>
@@ -288,8 +270,7 @@ const Main_Page = () => {
 
 
                 </div>
-                {/* <div className='back-color float-child-2 rounded-lg'> */}
-                    {/* <div className="grid gap-6 mb-6 md:grid-cols-2 "> */}
+                
                     <div className="float-child-2 rounded-lg">
                         {/* <Feed query={query} posts={posts}/> */}
                         <PaginatedItems posts={posts} query={query} itemsPerPage={10}/>
