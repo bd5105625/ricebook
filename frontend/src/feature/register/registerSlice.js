@@ -88,32 +88,26 @@ const registerSlice = createSlice({
             state.isLogin= false
         },
         Page_action: (state, action) => {
-            // console.log("---",action.payload)
             switch(action.payload.type) {  
                 case LOGIN:
                     state.Page_State = "LOGIN"
                     state.isLogin = true
-                    // console.log("!!",state.Page_State)
                     break
                 case LOGIN_ERROR:
                     state.Page_State = "LOGIN_ERROR"
                     state.isLogin = false
-                    // console.log("~~",state.Page_State)
                     break
                 case LOGOUT:
                     state.Page_State = "LOGOUT"
                     state.isLogin = false
-                    // console.log("@@",state.Page_State)
                     break
                 case REGISTER:
                     state.Page_State = "REGISTER"
                     state.isLogin = true
-                    // console.log("##",state.Page_State)
                     break
                 case REGISTER_ERROR:
                     state.Page_State = "REGISTER_ERROR"
                     state.isLogin = false
-                    // console.log("%%",state.Page_State)
                     break
                 default:
                     break
@@ -121,18 +115,12 @@ const registerSlice = createSlice({
         },
         update_follower(state, action) {
             state.Following = action.payload.temp
-            // console.log("in redux",action.payload, state.Following)
         },
         add_follower(state, action) {
-            // console.log("follower in redux",state.Following)
             state.Following.push(action.payload)
         },
         remove_follower(state, action) {
-            // console.log("follower in redux",state.Following)
             state.Following = action.payload
-            // console.log("remove follower in redux",action.payload)
-            // state.Following = state.Following.filter((item) => item !== action.payload)
-            // console.log("follower in redux",state.Following)
         },
         update_follower_avatar(state, action) {
             state.Following_Avatar = action.payload.temp

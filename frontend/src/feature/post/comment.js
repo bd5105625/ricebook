@@ -10,7 +10,6 @@ export function Comment(props) {
     const {DisplayName} = useSelector((store) => store.register)
     const dispatch = useDispatch()
 
-    // const [isUpdate, setIsUpdate] = useState(false)
 
     const handleComment = async (author, _id) => {
         let content = document.getElementById(_id)
@@ -20,8 +19,6 @@ export function Comment(props) {
                 console.log(res)
             })
             dispatch(addComment({index: props.index, author: DisplayName, text: content.value}))
-            // console.log("output comments", props.comments, props.index)
-            // console.log(content.value)
             content.value = ""
         }
     }
@@ -37,10 +34,6 @@ export function Comment(props) {
             <h3>Comment</h3>
             <div className='comment_style rounded-lg'>
                 <CommentList comments={props.comments} />
-                {/* <h1>Brad: comment</h1>
-                <h1>Tom Cruise: Maverick is awesome</h1>
-                <h1>Brad Pit: I'm famous</h1>
-                <h1>Taylor Swift: New album was released recently</h1> */}
 
                 <div className='comment_line_style'>
                     <input type="text" id={props._id}
@@ -61,8 +54,7 @@ export function Comment(props) {
 const CommentList = (props) => {
     return (
         props.comments.map((comment, index) => {
-            // console.log(index)
-            // console.log("comment", comment.author)
+
             return (
                 <div key={index}>
                     <h5>{comment.author}: {comment.text} </h5>

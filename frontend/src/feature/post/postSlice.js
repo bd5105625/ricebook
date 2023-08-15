@@ -57,9 +57,6 @@ const postSlice = createSlice({
             state.posts[payload.index].text = payload.text
         },
         addComment: (state, {payload}) => {
-            // console.log(payload.index)
-            // console.log(state.posts[payload.index].comments)
-            // console.log("in ", payload, payload.index, JSON.stringify(state.posts[payload.index].comments[0]))
             state.posts[payload.index].comments.push({author: payload.author, text: payload.text})
         }
     }
@@ -68,4 +65,3 @@ const postSlice = createSlice({
 export const {update, unFollow,addFollow,clickComment,updatePost,addPost,handleSearch, handlerSearchCancel, clickEdit, editText, addComment} = postSlice.actions
 export default postSlice.reducer;
 
-// module.exports = postSlice
