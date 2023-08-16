@@ -11,55 +11,43 @@ import { useState } from "react"
 import { BASE_URL } from "../url";
 
 const MainPage = () =>{
-    // const [query, setQuery] = useState('')
-    const [data,setData] = useState("");
     const [status,setStatus] = useState(true);
-    const handleButton = () => {
-        setStatus(!status)
 
-    }
 
     return (
 
         <div className="">
-        <div className="">
-         {/* <nav className="fixed bg-gray-500 w-full px-14 p-3"> */}
-            <nav className="py-4 container flex flex-wrap justify-between items-center mx-auto">
-                {/*<a href="https://flowbite.com/" className="flex items-center">*/}
-                <a className="flex items-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Rice_Owls_logo.svg/1200px-Rice_Owls_logo.svg.png" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/>
-                    <span
-                        className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">RiceBook</span>
-                </a>
-                <div>
-                    <button 
-                        onClick={handleButton}
-                        className="rounded-full bg-gray-400 px-4 py-1">
-                        {status ? "Register" : "Sign in"}
-                    </button>
-                </div>
-
-            </nav>
-            
-            <div className="float-landing-container container w-1/2 mx-auto rounded-xl   p-8 m-10 bg-white">
-
-
-                    {/* // status ? */}
-                { status ? 
-
-                        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-                        <LoginForm />
-                        
-                        </div>
-                        
-                    
-                    : 
-                    <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-                        <RegistrationForm />
+            <div className="">
+            {/* <nav className="fixed bg-gray-500 w-full px-14 p-3"> */}
+                <nav className="py-4 container flex flex-wrap justify-between items-center mx-auto">
+                    {/*<a href="https://flowbite.com/" className="flex items-center">*/}
+                    <a className="flex items-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Rice_Owls_logo.svg/1200px-Rice_Owls_logo.svg.png" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/>
+                        <span
+                            className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">RiceBook</span>
+                    </a>
+                    <div>
+                        <button 
+                            onClick={()=>{setStatus(!status)}}
+                            className="rounded-full bg-gray-400 px-4 py-1">
+                            {status ? "Register" : "Sign in"}
+                        </button>
                     </div>
-                }
+
+                </nav>
+                
+                <div className="float-landing-container container w-1/2 mx-auto rounded-xl   p-8 m-10 bg-white">
+                    { status ? 
+                        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
+                            <LoginForm />
+                        </div>
+                        : 
+                        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
+                            <RegistrationForm />
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
         </div>
 
 
@@ -201,6 +189,8 @@ const RegistrationForm = () =>  {
     const dispatch = useDispatch((store) => store.register)
 
     const navigate = useNavigate()
+    
+    const [user_info, setUser_info] = useState({username: "", password: "", displayname: "", zipcode: "", phone: "", email: "", dob: ""})
 
 
 
@@ -370,8 +360,6 @@ const RegistrationForm = () =>  {
                     </button>
                 </div>
             </form>
-
-
         </div>
     );
 };
