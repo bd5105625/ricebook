@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import './main.css'
-import { ReadUser, UserNameList, UserPostList} from './getdata'
+import { ReadUser } from './getdata'
 import { PaginatedItems} from './post'
 import { useDispatch, useSelector } from "react-redux";
 import { addPost, updatePost, update} from "../feature/post/postSlice";
