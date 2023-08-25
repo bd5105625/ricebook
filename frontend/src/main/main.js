@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import './main.css'
-import { ReadUser } from './getdata'
+import { Get_Follower } from './getdata'
 import { PaginatedItems} from './post'
 import { useDispatch, useSelector } from "react-redux";
 import { addPost, updatePost, update} from "../feature/post/postSlice";
@@ -168,7 +168,7 @@ const Main_Page = () => {
             <div className="float-container">
 
                 <div className='bg-white float-child-1 rounded-lg'>
-                    <ReadUser login_name={Account} />
+                    <Get_Follower login_name={Account} />
                 </div>
 
                 <div className="float-child-2 rounded-lg">
