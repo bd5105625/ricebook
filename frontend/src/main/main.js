@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react"
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import './main.css'
-import {ReadUser, UserNameList, UserPostList} from './getdata'
-import {information} from "../landing/newuser";
+import { ReadUser, UserNameList, UserPostList} from './getdata'
 import { PaginatedItems} from './post'
 import { useDispatch, useSelector } from "react-redux";
-import { addPost, updatePost, update, handleSearch, handlerSearchCancel  } from "../feature/post/postSlice";
+import { addPost, updatePost, update} from "../feature/post/postSlice";
 import { Logout_clear, new_status, Page_action, load_data } from "../feature/register/registerSlice";
-import Container from 'react-bootstrap/Container';
 import axios from "axios";
 import { BASE_URL } from "../url";
 
@@ -46,7 +44,7 @@ const Main_Page = () => {
         }
         await axios.put(`${BASE_URL}/headline`, todo)
         .then((res) => {
-            console.log("output displayname", document.cookie.split('=')[1])
+            // console.log("output displayname", document.cookie.split('=')[1])
             dispatch(new_status(statusText))
             setStatusText('')
         })
@@ -70,7 +68,7 @@ const Main_Page = () => {
         let newPost = []
         await axios.put(`${BASE_URL}/logout`)
         .then((res) => {
-            console.log(res)
+            // console.log(res)
             dispatch(Logout_clear())
             dispatch(Page_action({Page_State:'LOGOUT'}))
             dispatch(update({addinglist}))
@@ -83,7 +81,7 @@ const Main_Page = () => {
             }
             localStorage.clear()
             // clear cookie
-            console.log("cookie", document.cookie)
+            // console.log("cookie", document.cookie)
         })
     }
 
@@ -240,6 +238,11 @@ const PostField = ({handleSetSearchPost}) => {
         }
     }
 
+    const clear_post = () => {
+        setMessage('')
+        setImgSrc('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s')
+    }
+
     return (
         <>
         <div className="float-post-container">
@@ -290,12 +293,4 @@ const PostField = ({handleSetSearchPost}) => {
     )
 }
 
-function clear_post () {
-    const text = document.getElementById('message')
-    let preview = document.getElementById('preview')
-    console.log(preview.src)
-    preview.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s'
-    console.log(text.value)
-    text.value = '';
-}
 export default Main_Page;
