@@ -10,9 +10,7 @@ import axios from "axios";
 import { useState } from "react"
 import { BASE_URL } from "../url";
 
-const MainPage = () =>{
-    // const [query, setQuery] = useState('')
-    const [data,setData] = useState("");
+const MainPage = () => {
     const [status,setStatus] = useState(true);
     const handleButton = () => {
         setStatus(!status)
@@ -58,12 +56,10 @@ const MainPage = () =>{
             {/* <div className="container w-9/12 mx-auto rounded-xl shadow border p-8 m-10 bg-white"> */}
             <div className="float-landing-container container w-1/2 mx-auto rounded-xl   p-8 m-10 bg-white">
 
-
-                    {/* // status ? */}
                 { status ? 
 
                         <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-                        <LoginForm />
+                            <LoginForm />
                         
                         </div>
                         
@@ -142,8 +138,7 @@ const LoginForm = () => {
                     console.log(error.message)
                 }
             })
-        // console.log("all information",information.username,information.address.street, information.address.zipcode, information.phone, information.email)
-        // dispatch(update_information({information}))
+        
         dispatch(Page_action({type:"LOGIN"}))
 
     }
@@ -215,51 +210,51 @@ const LoginForm = () => {
     return (
         <div>
 
-        <form className="flex flex-col gap-4" onSubmit={(event)=>{clickLogin(event)}}>
-            <div>
-                <div className="mb-2 block">
-                    <Label
-                        htmlFor="account1"
-                        value="Your account name"
+            <form className="flex flex-col gap-4" onSubmit={(event)=>{clickLogin(event)}}>
+                <div>
+                    <div className="mb-2 block">
+                        <Label
+                            htmlFor="account1"
+                            value="Your account name"
+                            />
+                    </div>
+                    <TextInput
+                        id="account1"
+                        type="text"
+                        placeholder="TomCruise"
+                        required={true}
+                        
                         />
                 </div>
-                <TextInput
-                    id="account1"
-                    type="text"
-                    placeholder="TomCruise"
-                    required={true}
-                    
-                    />
-            </div>
-            <div>
-                <div className="mb-2 block">
-                    <Label
-                        htmlFor="password1"
-                        value="Your password"
+                <div>
+                    <div className="mb-2 block">
+                        <Label
+                            htmlFor="password1"
+                            value="Your password"
+                            />
+                    </div>
+                    <TextInput
+                        id="password1"
+                        type="password"
+                        required={true}
                         />
                 </div>
-                <TextInput
-                    id="password1"
-                    type="password"
-                    required={true}
-                    />
-            </div>
 
 
-            <div className="flex flex-col justify-center">
-                {/*<Link to={'/main'}>*/}
-                    <button type="submit"
-                            // className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                            className="rounded-full bg-gray-400 px-4 py-2 hover:bg-gray-600 focus:ring-5 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                <div className="flex flex-col justify-center">
+                    {/*<Link to={'/main'}>*/}
+                        <button type="submit"
+                                // className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                className="rounded-full bg-gray-400 px-4 py-2 hover:bg-gray-600 focus:ring-5 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
 
-                        Login
+                            Login
 
-                    </button>
-                {/*</Link>*/}
-            </div>
-            
+                        </button>
+                    {/*</Link>*/}
+                </div>
+                
 
-        </form>
+            </form>
             {/* <div className="inline-flex justify-center items-center w-full py-4">
                 <hr className="my-8 w-full h-px bg-gray-800 border-0 dark:bg-gray-800 "/>
                 <span className="absolute left-1/2 px-3 font-medium text-gray-900 bg-white -translate-x-1/2 dark:text-white dark:bg-gray-900">Or continue with</span>
