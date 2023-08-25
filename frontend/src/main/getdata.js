@@ -39,11 +39,11 @@ export let UserInformation = []
 export const GetAllData = (props) => {
 
     const  dispatch = useDispatch()
-    const {CurrentPost} = useSelector((store)=>store.post)
+    // const {CurrentPost} = useSelector((store)=>store.post)
 
     const getUser = async () => {
         const newUser = await UserList()
-        UserInformation = newUser
+        let UserInformation = newUser
         let temp = []
         let index = -100
         const newName = newUser.map((user) => 
@@ -95,7 +95,7 @@ export const ReadUser = (props) => {
     const [name,setName] = useState('')
     const [curr_Follower,setCurr_Follower] = useState([]) // store current follower
     const [curr_Follower_Info,setCurr_Follower_Info] = useState([]) // store current follower info
-    const {Following} = useSelector((store)=>store.register)
+    // const {Following} = useSelector((store)=>store.register)
 
     const dispatch = useDispatch()
 
@@ -126,13 +126,10 @@ export const ReadUser = (props) => {
     }
 
     useEffect(() => {
-        
-
         InitialFollower();
     },[])
 
     useEffect(() => {
-
 
     },[curr_Follower])
 

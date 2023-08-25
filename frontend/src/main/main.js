@@ -80,6 +80,20 @@ const Main_Page = () => {
                 document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;'
             }
             localStorage.clear()
+            if (!localStorage.getItem('userInformation')) {
+                let data = {
+                    username: '',
+                    displayname: '',
+                    zipcode: '',
+                    phone: '',
+                    email: '',
+                    headline: '',
+                    dob: '',
+                    avatar: '',
+                    following: [],
+                }
+                window.localStorage.setItem("userInformation", JSON.stringify(data))
+            }
             // clear cookie
             // console.log("cookie", document.cookie)
         })
