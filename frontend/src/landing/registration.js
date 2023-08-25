@@ -58,16 +58,16 @@ const MainPage = () => {
 
                 { status ? 
 
-                        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
+                        // <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
                             <LoginForm />
                         
-                        </div>
+                        // </div>
                         
                     
                     : 
-                    <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
+                    // <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
                         <RegistrationForm />
-                    </div>
+                    // </div>
                 }
 
 
@@ -101,6 +101,11 @@ const MainPage = () => {
     )
 }
 const LoginForm = () => {
+
+    const [formData, setFormData] = useState({
+        account: '',
+        password: '',
+    })
 
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -145,15 +150,12 @@ const LoginForm = () => {
 
     const clickLogin = async (e) =>{
         e.preventDefault()
-        
-        let Account = document.getElementById('account1').value
-        let Password = document.getElementById("password1").value
         const todo = {
-            'username': Account,
-            'password': Password
+            'username': formData.account,
+            'password': formData.password
         }
-        information.Account = Account
-        information.Password = Password
+        information.Account = formData.account
+        information.Password = formData.password
         // await axios.post('http://localhost:3000/login', todo,  { credentials: true })
         await axios.post(`${BASE_URL}/login`, todo)  
             .then(res => {
@@ -162,7 +164,6 @@ const LoginForm = () => {
                     // store username to cookie
                     
                     updateUserInformation()
-                    // console.log(UserInformation[0])
                     console.log("here")
                     dispatch(Page_action({type: LOGIN}))
                     navigate('/main')
@@ -208,7 +209,7 @@ const LoginForm = () => {
     }
 
     return (
-        <div>
+        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
 
             <form className="flex flex-col gap-4" onSubmit={(event)=>{clickLogin(event)}}>
                 <div>
@@ -220,6 +221,8 @@ const LoginForm = () => {
                     </div>
                     <TextInput
                         id="account1"
+                        value={formData.account}
+                        onChange={(event) => setFormData({...formData, account: event.target.value})}
                         type="text"
                         placeholder="TomCruise"
                         required={true}
@@ -235,6 +238,8 @@ const LoginForm = () => {
                     </div>
                     <TextInput
                         id="password1"
+                        value={formData.password}
+                        onChange={(event) => setFormData({...formData, password: event.target.value})}
                         type="password"
                         required={true}
                         />
@@ -271,55 +276,56 @@ const LoginForm = () => {
 
 const RegistrationForm = () =>  {
 
+    const [formData, setFormData] = useState({
+        account: '',
+        displayName: '',
+        email: '',
+        password: '',
+        repeatPassword: '',
+        zip: '',
+        phone: '',
+        dob: '',
+    })
+
+    const [passwordStatus, setPasswordStatus] = useState(true)
+
     const dispatch = useDispatch((store) => store.register)
 
     const navigate = useNavigate()
-    // const handleSubmit = () => {
-    //     let pass = clickSignup()
-    //     // let state = "SIGNUP"
-    //     if (pass){
-    //         dispatch(Page_action({type: REGISTER}))
-    //         // dispatch(new_state({state}))
-    //         navigate('/main')
-    //     }
-    //     else{
-    //         dispatch(Page_action({type: REGISTER_ERROR}))
-    //         window.alert("Account Exists")
-    //     }
-        
-    // }
 
-
-    const clickSignup = async () => {
-        
-        const accountInput = document.getElementById('account')
-        if (UserNameList.includes(accountInput.value)){
-            return false
+    const handleInputChange = (event) => {
+        const {id, value} = event.target
+        setFormData({...formData, [id]: value})
+        if (formData.password !== formData.repeatPassword){
+            setPasswordStatus(false)
         }
-        const displayNameInput = document.getElementById('displayName')
-        const phoneInput = document.getElementById('phone')
-        const emailInput = document.getElementById('email2')
-        const zipInput = document.getElementById('zip')
-        const dob = document.getElementById('birthday')
-        const passwordInput = document.getElementById("password2")
+        else{
+            setPasswordStatus(true)
+        }
+
+    }
+    
+
+    const handSignUp = async () => {
+
+        
         const information = {
-            username:accountInput.value,
-            password:passwordInput.value,
-            displayname: displayNameInput.value,
-            zipcode: zipInput.value,
+            username:formData.account,
+            password:formData.password,
+            displayname: formData.displayName,
+            zipcode: formData.zip,
             // address:{street:passwordInput.value, zipcode:zipInput.value},
-            phone: phoneInput.value,
-            email:emailInput.value,
-            dob:dob.value,
+            phone: formData.phone,
+            email:formData.email,
+            dob:formData.dob,
         }
         await axios.post(`${BASE_URL}/register`, information)
         .then(res => {
-            console.log("data here",res.data)
+            // console.log("data here",res.data)
             dispatch(update_information({information}))
             dispatch(Page_action({type: REGISTER}))
-            // dispatch(new_state({state}))
             navigate('/main')
-            console.log(res.data)
+            // console.log(res.data)
             return true
         })
         .catch(error => {
@@ -335,8 +341,10 @@ const RegistrationForm = () =>  {
     }
 
     return (
+        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
+
         <div className="flex flex-col items-center justify-center">
-            <form className="flex flex-col gap-2" onSubmit={clickSignup}>
+            <form className="flex flex-col gap-2" onSubmit={handSignUp}>
                 <div>
                     <div className="mb-2 block">
                         <Label
@@ -346,8 +354,10 @@ const RegistrationForm = () =>  {
                     </div>
                     <TextInput
                         id="account"
+                        value={formData.account}
+                        onChange={handleInputChange}
+                        placeholder="Account"
                         required={true}
-
                     />
                 </div>
                 <div>
@@ -359,6 +369,9 @@ const RegistrationForm = () =>  {
                     </div>
                     <TextInput
                         id="displayName"
+                        value={formData.displayName}
+                        onChange={handleInputChange}
+                        placeholder="Display Name"
                         required={true}
 
                     />
@@ -372,6 +385,8 @@ const RegistrationForm = () =>  {
                     </div>
                     <TextInput
                         id="zip"
+                        value={formData.zip}
+                        onChange={handleInputChange}
                         placeholder="77005"
                         required={true}
                         pattern="[0-9]{5}"
@@ -386,6 +401,8 @@ const RegistrationForm = () =>  {
                     </div>
                     <TextInput
                         id="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
                         placeholder="123-456-7890"
                         required={true}
                         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
@@ -400,8 +417,10 @@ const RegistrationForm = () =>  {
                     </div>
                     <TextInput
                         id="email2"
+                        value={formData.email}
+                        onChange={handleInputChange}
                         type="email"
-                        placeholder="name@flowbite.com"
+                        placeholder="name@ricebook.com"
                         required={true}
 
                     />
@@ -415,9 +434,10 @@ const RegistrationForm = () =>  {
                     </div>
                     <TextInput
                         aria-label="Birthday"
+                        value={formData.dob}
+                        onChange={handleInputChange}
                         id="birthday"
                         type="date"
-                        // placeholder="name@flowbite.com"
                         required={true}
 
                     />
@@ -431,6 +451,8 @@ const RegistrationForm = () =>  {
                     </div>
                     <TextInput
                         id="password2"
+                        value={formData.password}
+                        onChange={handleInputChange}
                         type="password"
                         required={true}
                     />
@@ -444,22 +466,30 @@ const RegistrationForm = () =>  {
                     </div>
                     <TextInput
                         id="repeat-password"
+                        value={formData.repeatPassword}
+                        onChange={handleInputChange}
                         type="password"
                         required={true}
                     />
+                    <div className="mb-2 block">
+                        {
+                            passwordStatus ? <p></p> : <p>Password not match</p>
+                        }
+                    </div>
                 </div>
 
                 <div className="flex flex-col justify-center">
 
                     <button  type="submit"
                             className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-
+                            disabled={!passwordStatus}
                         Sign Up
                     </button>
                 </div>
             </form>
 
 
+        </div>
         </div>
     );
 };
