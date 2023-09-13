@@ -11,94 +11,43 @@ import { useState } from "react"
 import { BASE_URL } from "../url";
 
 const MainPage = () =>{
-    // const [query, setQuery] = useState('')
-    const [data,setData] = useState("");
     const [status,setStatus] = useState(true);
-    const handleButton = () => {
-        setStatus(!status)
 
-    }
 
     return (
 
         <div className="">
-        {/* <div className=" px-2 sm:px-4 py-3 "> */}
-        <div className="">
-         {/* <nav className="fixed bg-gray-500 w-full px-14 p-3"> */}
-            <nav className="py-4 container flex flex-wrap justify-between items-center mx-auto">
-                {/*<a href="https://flowbite.com/" className="flex items-center">*/}
-                <a className="flex items-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Rice_Owls_logo.svg/1200px-Rice_Owls_logo.svg.png" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/>
-                    <span
-                        className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">RiceBook</span>
-                </a>
-                {/* <label data-collapse-toggle="navbar-default" type="button"
-                        className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        aria-controls="navbar-default" aria-expanded="false">
-                    <span className="sr-only">Open main menu</span>
-                    <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                            ></path>
-                    </svg>
-                </label> */}
-                <div>
-                    <button 
-                        onClick={handleButton}
-                        className="rounded-full bg-gray-400 px-4 py-1">
-                        {status ? "Register" : "Sign in"}
-                    </button>
-                </div>
-
-            </nav>
-            
-            {/*<div class="text-center">*/}
-            {/* <div className="float-landing-container  w-9/12 m-15 rounded-lg"> */}
-            {/* <div className="container w-9/12 mx-auto rounded-xl shadow border p-8 m-10 bg-white"> */}
-            <div className="float-landing-container container w-1/2 mx-auto rounded-xl   p-8 m-10 bg-white">
-
-
-                    {/* // status ? */}
-                { status ? 
-
-                        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-                        <LoginForm />
-                        
-                        </div>
-                        
-                    
-                    : 
-                    <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-                        <RegistrationForm />
+            <div className="">
+            {/* <nav className="fixed bg-gray-500 w-full px-14 p-3"> */}
+                <nav className="py-4 container flex flex-wrap justify-between items-center mx-auto">
+                    {/*<a href="https://flowbite.com/" className="flex items-center">*/}
+                    <a className="flex items-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Rice_Owls_logo.svg/1200px-Rice_Owls_logo.svg.png" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/>
+                        <span
+                            className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">RiceBook</span>
+                    </a>
+                    <div>
+                        <button 
+                            onClick={()=>{setStatus(!status)}}
+                            className="rounded-full bg-gray-400 px-4 py-1">
+                            {status ? "Register" : "Sign in"}
+                        </button>
                     </div>
-                }
 
-
-                    {/* <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-                        <RegisterForm />
-                     </div> */}
-                    {/*{this.state.show_login?*/}
-
-
-                {/* Sign Up Form*/}
-                {/* <div className="flex flex-col items-center justify-center">
-
-
-                    <RegistrationForm/>
-                </div> */}
+                </nav>
+                
+                <div className="float-landing-container container w-1/2 mx-auto rounded-xl   p-8 m-10 bg-white">
+                    { status ? 
+                        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
+                            <LoginForm />
+                        </div>
+                        : 
+                        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
+                            <RegistrationForm />
+                        </div>
+                    }
+                </div>
             </div>
-            
-            {/* <form > */}
-
-                {/* <button onClick={handleButton} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                    Next Page
-                </button>
-                <label>{data}</label> */}
-            {/* </form> */}
-            {/* <GetAllData /> */}
-
-        </div>
         </div>
 
 
@@ -110,27 +59,12 @@ const LoginForm = () => {
     const dispatch = useDispatch()
 
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-    //     let pass = clickLogin()
-
-    //     console.log(pass)
-    //     if (pass){
-    //         dispatch(Page_action({type: LOGIN}))
-    //         navigate('/main')
-    //     }
-    //     else{
-    //         dispatch(Page_action({type: LOGIN_ERROR}))
-    //     }
-    // }
-
     const updateUserInformation =  async () => {
         await axios.get(`${BASE_URL}/profile`)
             .then(res => {                
                 console.log("data from backend", res.data)
                 window.localStorage.setItem("userInformation", JSON.stringify(res.data))
                 document.cookie = "displayname=" + res.data.displayname
-                // console.log("displayname from local storage", JSON.parse(window.localStorage.getItem("userInformation")).displayname)
             
                 dispatch(update_information(res.data))
             })
@@ -142,8 +76,6 @@ const LoginForm = () => {
                     console.log(error.message)
                 }
             })
-        // console.log("all information",information.username,information.address.street, information.address.zipcode, information.phone, information.email)
-        // dispatch(update_information({information}))
         dispatch(Page_action({type:"LOGIN"}))
 
     }
@@ -167,11 +99,9 @@ const LoginForm = () => {
                     // store username to cookie
                     
                     updateUserInformation()
-                    // console.log(UserInformation[0])
                     console.log("here")
                     dispatch(Page_action({type: LOGIN}))
                     navigate('/main')
-                    // console.log("cookie",res.cookie())
                     return true
                 }
             })
@@ -179,29 +109,9 @@ const LoginForm = () => {
                 window.alert("Wrong Account or password")
                 dispatch(Page_action({type: LOGIN_ERROR}))
                 return false
-                // if (error.response) {
-                //     //get HTTP error code
-                //     console.log(error.response.status)
-                // } else {
-                //     console.log(error.message)
-                // }
+
             })
 
-        // original code
-
-
-
-        // if (UserNameList.includes(Account)) {
-        //     let index = UserNameList.findIndex((name) => name === Account)
-        //     if (Password === UserPasswordList[index]){
-        //         console.log(UserInformation[index])
-        //         updateUserInformation(UserInformation[index])
-        //         return true
-        //     }
-        // }
-        // window.alert("Wrong Account or password")
-        // // dispatch(new_state({state}))
-        // return false
     }
 
     const handleClickGoogle = async () => {
@@ -279,20 +189,9 @@ const RegistrationForm = () =>  {
     const dispatch = useDispatch((store) => store.register)
 
     const navigate = useNavigate()
-    // const handleSubmit = () => {
-    //     let pass = clickSignup()
-    //     // let state = "SIGNUP"
-    //     if (pass){
-    //         dispatch(Page_action({type: REGISTER}))
-    //         // dispatch(new_state({state}))
-    //         navigate('/main')
-    //     }
-    //     else{
-    //         dispatch(Page_action({type: REGISTER_ERROR}))
-    //         window.alert("Account Exists")
-    //     }
-        
-    // }
+    
+    const [user_info, setUser_info] = useState({username: "", password: "", displayname: "", zipcode: "", phone: "", email: "", dob: ""})
+
 
 
     const clickSignup = async () => {
@@ -312,7 +211,6 @@ const RegistrationForm = () =>  {
             password:passwordInput.value,
             displayname: displayNameInput.value,
             zipcode: zipInput.value,
-            // address:{street:passwordInput.value, zipcode:zipInput.value},
             phone: phoneInput.value,
             email:emailInput.value,
             dob:dob.value,
@@ -322,7 +220,6 @@ const RegistrationForm = () =>  {
             console.log("data here",res.data)
             dispatch(update_information({information}))
             dispatch(Page_action({type: REGISTER}))
-            // dispatch(new_state({state}))
             navigate('/main')
             console.log(res.data)
             return true
@@ -463,8 +360,6 @@ const RegistrationForm = () =>  {
                     </button>
                 </div>
             </form>
-
-
         </div>
     );
 };
