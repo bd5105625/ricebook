@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 const Local = () => {
 
     const initializeLocalStorage = () => {
-        console.log("initializeLocalStorage")
+        // console.log("initializeLocalStorage")
         if (!localStorage.getItem('userInformation')) {
             let data = {
                 username: '',

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react"
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import './main.css'
-import {ReadUser, UserNameList, UserPostList} from './getdata'
-import {information} from "../landing/newuser";
+import { Get_Follower } from './getdata'
 import { PaginatedItems} from './post'
 import { useDispatch, useSelector } from "react-redux";
-import { addPost, updatePost, update, handleSearch, handlerSearchCancel  } from "../feature/post/postSlice";
+import { addPost, updatePost, update} from "../feature/post/postSlice";
 import { Logout_clear, new_status, Page_action, load_data } from "../feature/register/registerSlice";
-import Container from 'react-bootstrap/Container';
 import axios from "axios";
 import { BASE_URL } from "../url";
 
@@ -20,6 +18,8 @@ const Main_Page = () => {
     const {Avatar, DisplayName, Account,Page_State, Headline, Following} = useSelector((store) => store.register)
     const dispatch = useDispatch()
     const [query, setQuery] = useState('')
+
+    const [statusText, setStatusText] = useState('')
 
 
     const getPost = async () => {
@@ -38,76 +38,15 @@ const Main_Page = () => {
         
     }
 
-    const PostArticle= async () => {
-        const text = document.getElementById('message')
-        const preview = document.getElementById('preview')
-        if (text.value !== "")
-        {
-            let todo = {author: DisplayName, text:text.value, url:preview.src}
-            if (preview.src === 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s')
-            {
-                todo = {author :DisplayName, text:text.value, url:''}
-            }
-            else {
-                var formData = new FormData()
-                var imageFile = document.querySelector('#file')
-                formData.append("image", imageFile.files[0])
-                await axios.post(`${BASE_URL}/avatar`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                })
-                .then((res) => {
-                    // url = res.data.url_image
-                    todo.url = res.data.url_image
-                })                
-            }
-            console.log("input data!!!", todo)
-
-
-            
-            await axios.post(`${BASE_URL}/article`, todo)
-            .then((res) => {
-                console.log(res.data)
-                let temp = res.data
-                let newPost = {
-                    userId: 0,
-                    id: new Date().getTime().toString(),
-                    title: "",
-                    body: todo.text ,
-                    img: todo.url,
-                    name: DisplayName,
-                    isComment: false
-                    // date: new Date()
-                }
-                dispatch(addPost({newPost}))
-                text.value = ""
-                preview.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s'
-                getPost()
-                alert("Post Success")
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        }
-        else {
-            alert('Please enter some words')
-        }
-    }
-
-
-
-
     const updateStatus = async () => {
-        let status = document.getElementById('status_input')
         let todo = {
-            headline: status.value
+            headline: statusText
         }
         await axios.put(`${BASE_URL}/headline`, todo)
         .then((res) => {
-            console.log("output displayname", document.cookie.split('=')[1])
-            dispatch(new_status(status.value))
-            status.value = ''
+            // console.log("output displayname", document.cookie.split('=')[1])
+            dispatch(new_status(statusText))
+            setStatusText('')
         })
 
         
@@ -129,7 +68,7 @@ const Main_Page = () => {
         let newPost = []
         await axios.put(`${BASE_URL}/logout`)
         .then((res) => {
-            console.log(res)
+            // console.log(res)
             dispatch(Logout_clear())
             dispatch(Page_action({Page_State:'LOGOUT'}))
             dispatch(update({addinglist}))
@@ -141,8 +80,22 @@ const Main_Page = () => {
                 document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;'
             }
             localStorage.clear()
+            if (!localStorage.getItem('userInformation')) {
+                let data = {
+                    username: '',
+                    displayname: '',
+                    zipcode: '',
+                    phone: '',
+                    email: '',
+                    headline: '',
+                    dob: '',
+                    avatar: '',
+                    following: [],
+                }
+                window.localStorage.setItem("userInformation", JSON.stringify(data))
+            }
             // clear cookie
-            console.log("cookie", document.cookie)
+            // console.log("cookie", document.cookie)
         })
     }
 
@@ -150,14 +103,6 @@ const Main_Page = () => {
         setQuery(e.target.value)
     }
 
-    const handleFileUpload = (event) => {
-        if (event.target.files.length > 0) {
-            var src = URL.createObjectURL(event.target.files[0]);
-            var preview = document.getElementById('preview');
-            preview.src = src;
-            preview.style.display = "block";
-        }
-    }
 
 
 
@@ -205,7 +150,7 @@ const Main_Page = () => {
                     </div>
                     <div className="mb-6">
 
-                        <input type="text" id="status_input"
+                        <input type="text" id="status_input" onChange={(e) => setStatusText(e.target.value)} value={statusText}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         </input>
                     </div>
@@ -215,69 +160,22 @@ const Main_Page = () => {
                     </button>
                 </div>
                 <div id="write_post" className='bg-white float-child-2 rounded-lg'>
-                    <div className="float-post-container">
-
-                        <div>
-                            <div className="float-child-post-1 grid gap-6 mb-6 md:grid-cols-2">
-                                <div>
-                                    <input
-                                        className="block text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        aria-describedby="user_avatar_help" id="file" type="file"
-                                        onChange={(event)=>handleFileUpload(event)}
-                                        >
-                                    </input>
-                                </div>
-                            </div>
-
-                            <div className="float-child-post-2">
-                                <textarea id="message" rows="4"
-                                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Write something here">
-                                </textarea>
-                            </div>
-                        </div>
-                        <div>
-                            <img id="preview" className="preview_img" src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s'} height="400" width="300"></img>
-                        </div>
-
-                        <div className="float-child-post-1 ">
-                            <button id="post_text" type="button" onClick={clear_post}
-                                    className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                                        Cancel
-                            </button>
-
-                        </div>
-                        <div className="float-child-post-2">
-                            <button type="button" onClick={() => PostArticle()}
-                                    className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                                        Post
-                            </button>
-                        </div>
-                        
-                    </div>
-                    <div className="search_style">
-                        <input type="text" id="search_input" onChange={handleSetSearchPost} placeholder="Search Post"
-                            className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        </input>
-                        
-                    </div>
+                    <PostField handleSetSearchPost={handleSetSearchPost} getPost={getPost} />
+                    
                 </div>
             </div>
 
             <div className="float-container">
+
                 <div className='bg-white float-child-1 rounded-lg'>
-                        <ReadUser login_name={Account} />
-
-
+                    <Get_Follower login_name={Account} />
                 </div>
-                
-                    <div className="float-child-2 rounded-lg">
-                        {/* <Feed query={query} posts={posts}/> */}
-                        <PaginatedItems posts={posts} query={query} itemsPerPage={10}/>
 
+                <div className="float-child-2 rounded-lg">
+                    {/* <Feed query={query} posts={posts}/> */}
+                    <PaginatedItems posts={posts} query={query} itemsPerPage={10}/>
+                </div>
 
-                    </div>
-                {/* </div> */}
             </div>
 
 
@@ -285,12 +183,128 @@ const Main_Page = () => {
     );
 }
 
-function clear_post () {
-    const text = document.getElementById('message')
-    let preview = document.getElementById('preview')
-    console.log(preview.src)
-    preview.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s'
-    console.log(text.value)
-    text.value = '';
+const PostField = ({handleSetSearchPost}) => {
+
+    const {DisplayName} = useSelector((store) => store.register)
+    const dispatch = useDispatch()
+    const [imgSrc, setImgSrc] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s')
+    const [message, setMessage] = useState('')
+
+    const handleFileUpload = (event) => {
+        if (event.target.files.length > 0) {
+            setImgSrc(URL.createObjectURL(event.target.files[0]))
+
+            // not sure do i need this line
+            // preview.style.display = "block"; 
+        }
+    }
+
+    const PostArticle= async () => {
+
+        if (message !== "")
+        {
+            let todo = {author: DisplayName, text:message, url:imgSrc}
+            if (imgSrc === 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s')
+            {
+                todo = {author :DisplayName, text:message, url:''}
+            }
+            else {
+                var formData = new FormData()
+                var imageFile = document.querySelector('#file')
+                formData.append("image", imageFile.files[0])
+                await axios.post(`${BASE_URL}/avatar`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then((res) => {
+                    todo.url = res.data.url_image
+                })                
+            }
+
+
+            
+            await axios.post(`${BASE_URL}/article`, todo)
+            .then((res) => {
+                let temp = res.data
+                let newPost = {
+                    userId: 0,
+                    id: new Date().getTime().toString(),
+                    title: "",
+                    body: todo.text ,
+                    img: todo.url,
+                    name: DisplayName,
+                    isComment: false
+                    // date: new Date()
+                }
+                dispatch(addPost({newPost}))
+                setMessage('')
+                setImgSrc('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s')
+                getPost()
+                alert("Post Success")
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        }
+        else {
+            alert('Please enter some words')
+        }
+    }
+
+    const clear_post = () => {
+        setMessage('')
+        setImgSrc('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweURjQnK6cFM2Lt1yAM1UxDF32IpFxU77vJxdGUggBg&s')
+    }
+
+    return (
+        <>
+        <div className="float-post-container">
+            <div>
+                <div className="float-child-post-1 grid gap-6 mb-6 md:grid-cols-2">
+                    <div>
+                        <input
+                            className="block text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                            aria-describedby="user_avatar_help" id="file" type="file"
+                            onChange={(event)=>handleFileUpload(event)}
+                            >
+                        </input>
+                    </div>
+                </div>
+
+                <div className="float-child-post-2">
+                    <textarea id="message" rows="4" value={message} onChange={(e) => setMessage(e.target.value)}
+                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Write something here">
+                    </textarea>
+                </div>
+            </div>
+            <div>
+                <img id="preview" className="preview_img" src={imgSrc} height="400" width="300"></img>
+            </div>
+
+            <div className="float-child-post-1 ">
+                <button id="post_text" type="button" onClick={clear_post}
+                        className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                            Cancel
+                </button>
+
+            </div>
+            <div className="float-child-post-2">
+                <button type="button" onClick={() => PostArticle()}
+                        className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                            Post
+                </button>
+            </div>
+
+            </div>
+            <div className="search_style">
+            <input type="text" id="search_input" onChange={handleSetSearchPost} placeholder="Search Post"
+                className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </input>
+        </div>
+        </>
+    )
 }
+
 export default Main_Page;

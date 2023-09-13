@@ -39,11 +39,11 @@ export let UserInformation = []
 export const GetAllData = (props) => {
 
     const  dispatch = useDispatch()
-    const {CurrentPost} = useSelector((store)=>store.post)
+    // const {CurrentPost} = useSelector((store)=>store.post)
 
     const getUser = async () => {
         const newUser = await UserList()
-        UserInformation = newUser
+        let UserInformation = newUser
         let temp = []
         let index = -100
         const newName = newUser.map((user) => 
@@ -91,11 +91,11 @@ export const GetAllData = (props) => {
     return <></>
 }
 
-export const ReadUser = (props) => {
-    const [name,setName] = useState('')
+export const Get_Follower = (props) => {
     const [curr_Follower,setCurr_Follower] = useState([]) // store current follower
     const [curr_Follower_Info,setCurr_Follower_Info] = useState([]) // store current follower info
-    const {Following} = useSelector((store)=>store.register)
+    const [newfollowerName,setNewfollowerName] = useState([]) // store new follower
+    // const {Following} = useSelector((store)=>store.register)
 
     const dispatch = useDispatch()
 
@@ -126,18 +126,15 @@ export const ReadUser = (props) => {
     }
 
     useEffect(() => {
-        
-
         InitialFollower();
     },[])
 
     useEffect(() => {
 
-
     },[curr_Follower])
 
     const Addnewfollower = async () => {
-        let new_follower = document.getElementById("follower-input").value
+        let new_follower = newfollowerName
         let temp1 = curr_Follower
         await axios.put(`${BASE_URL}/following/${new_follower}`)
         .then((response) => {
@@ -150,11 +147,11 @@ export const ReadUser = (props) => {
             console.log(error)
             alert("Please enter a valid username")
         })
-        setName('')
+        // setName('')
         // console.log("current", curr_Follower)
         await axios.post(`${BASE_URL}/followerProfile`, {follower: temp1})
         .then((res) => {
-            console.log("follower data", res.data)
+            // console.log("follower data", res.data)
             setCurr_Follower_Info(res.data)
             let temp = res.data.map((item) => 
                 {
@@ -181,10 +178,9 @@ export const ReadUser = (props) => {
 
         })
 
-        console.log("current", curr_Follower)
         await axios.post(`${BASE_URL}/followerProfile`, {follower: newUser})
         .then((res) => {
-            console.log("follower data", res.data)
+            // console.log("follower data", res.data)
             setCurr_Follower_Info(res.data)
             let temp = res.data.map((item) => 
                 {
@@ -221,7 +217,7 @@ export const ReadUser = (props) => {
             </div>
             <div>
                 <div className="mb-6">
-                    <input type="text" id="follower-input" value={name} onChange={(e) => setName(e.target.value)}
+                    <input type="text" id="follower-input" value={newfollowerName} onChange={(e)=>setNewfollowerName(e.target.value)}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
                 </div>
 
