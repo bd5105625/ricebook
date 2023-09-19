@@ -12,8 +12,6 @@ import { BASE_URL } from '../url'
 import './page.css'
 
 
-
-
 export function Feed(props) {
     const dispatch = useDispatch()
     const {Account, Avatar ,DisplayName, Following_Avatar} = useSelector((store) => store.register)

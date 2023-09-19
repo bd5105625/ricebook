@@ -1,5 +1,5 @@
 import React from "react";
-import {Checkbox, Label, TextInput} from "flowbite-react";
+import { Label, TextInput} from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
 import {information} from "./newuser";
@@ -9,9 +9,11 @@ import { update_information,Page_action, LOGIN, LOGIN_ERROR, REGISTER, REGISTER_
 import axios from "axios";
 import { useState } from "react"
 import { BASE_URL } from "../url";
+import './register.css'
 
 const MainPage = () => {
     const [status,setStatus] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const handleButton = () => {
         setStatus(!status)
 
@@ -20,87 +22,37 @@ const MainPage = () => {
     return (
 
         <div className="">
-        {/* <div className=" px-2 sm:px-4 py-3 "> */}
-        <div className="">
-         {/* <nav className="fixed bg-gray-500 w-full px-14 p-3"> */}
-            <nav className="py-4 container flex flex-wrap justify-between items-center mx-auto">
-                {/*<a href="https://flowbite.com/" className="flex items-center">*/}
-                <a className="flex items-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Rice_Owls_logo.svg/1200px-Rice_Owls_logo.svg.png" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/>
-                    <span
-                        className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">RiceBook</span>
-                </a>
-                {/* <label data-collapse-toggle="navbar-default" type="button"
-                        className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        aria-controls="navbar-default" aria-expanded="false">
-                    <span className="sr-only">Open main menu</span>
-                    <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                            ></path>
-                    </svg>
-                </label> */}
-                <div>
-                    <button 
-                        onClick={handleButton}
-                        className="rounded-full bg-gray-400 px-4 py-1">
-                        {status ? "Register" : "Sign in"}
-                    </button>
+            <div className="">
+                <nav className="py-4 container flex flex-wrap justify-between items-center mx-auto">
+                    <a className="flex items-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Rice_Owls_logo.svg/1200px-Rice_Owls_logo.svg.png" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/>
+                        <span
+                            className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">RiceBook</span>
+                    </a>
+                    <div>
+                        <button 
+                            onClick={handleButton}
+                            className="rounded-full bg-gray-400 px-4 py-1">
+                            {status ? "Register" : "Sign in"}
+                        </button>
+                    </div>
+
+                </nav>
+                <div className="float-landing-container container w-1/2 mx-auto rounded-xl   p-8 m-10 bg-white">
+                    { status ? 
+                        (isLoading ? <LoadingPage /> : <LoginForm setIsLoading={setIsLoading}/>)
+                        :                         
+                        (isLoading ? <LoadingPage /> : <RegistrationForm setIsLoading={setIsLoading}/>)
+                    }
                 </div>
 
-            </nav>
-            
-            {/*<div class="text-center">*/}
-            {/* <div className="float-landing-container  w-9/12 m-15 rounded-lg"> */}
-            {/* <div className="container w-9/12 mx-auto rounded-xl shadow border p-8 m-10 bg-white"> */}
-            <div className="float-landing-container container w-1/2 mx-auto rounded-xl   p-8 m-10 bg-white">
-
-                { status ? 
-
-                        // <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-                            <LoginForm />
-                        
-                        // </div>
-                        
-                    
-                    : 
-                    // <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-                        <RegistrationForm />
-                    // </div>
-                }
-
-
-                    {/* <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-                        <RegisterForm />
-                     </div> */}
-                    {/*{this.state.show_login?*/}
-
-
-                {/* Sign Up Form*/}
-                {/* <div className="flex flex-col items-center justify-center">
-
-
-                    <RegistrationForm/>
-                </div> */}
             </div>
-            
-            {/* <form > */}
-
-                {/* <button onClick={handleButton} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                    Next Page
-                </button>
-                <label>{data}</label> */}
-            {/* </form> */}
-            {/* <GetAllData /> */}
-
-        </div>
         </div>
 
 
     )
 }
-const LoginForm = () => {
+const LoginForm = ({setIsLoading}) => {
 
     const [formData, setFormData] = useState({
         account: '',
@@ -149,6 +101,9 @@ const LoginForm = () => {
     }
 
     const clickLogin = async (e) =>{
+        setIsLoading(true)
+        //delay 3 second
+        // sleep(3000)
         e.preventDefault()
         const todo = {
             'username': formData.account,
@@ -162,42 +117,21 @@ const LoginForm = () => {
 
                 if (res.data.result === "login success"){
                     // store username to cookie
-                    
                     updateUserInformation()
-                    console.log("here")
                     dispatch(Page_action({type: LOGIN}))
                     navigate('/main')
-                    // console.log("cookie",res.cookie())
                     return true
                 }
             })
             .catch(error => {
                 window.alert("Wrong Account or password")
+                setIsLoading(false)
                 dispatch(Page_action({type: LOGIN_ERROR}))
                 return false
-                // if (error.response) {
-                //     //get HTTP error code
-                //     console.log(error.response.status)
-                // } else {
-                //     console.log(error.message)
-                // }
+
             })
 
-        // original code
 
-
-
-        // if (UserNameList.includes(Account)) {
-        //     let index = UserNameList.findIndex((name) => name === Account)
-        //     if (Password === UserPasswordList[index]){
-        //         console.log(UserInformation[index])
-        //         updateUserInformation(UserInformation[index])
-        //         return true
-        //     }
-        // }
-        // window.alert("Wrong Account or password")
-        // // dispatch(new_state({state}))
-        // return false
     }
 
     const handleClickGoogle = async () => {
@@ -260,32 +194,26 @@ const LoginForm = () => {
                 
 
             </form>
-            {/* <div className="inline-flex justify-center items-center w-full py-4">
-                <hr className="my-8 w-full h-px bg-gray-800 border-0 dark:bg-gray-800 "/>
-                <span className="absolute left-1/2 px-3 font-medium text-gray-900 bg-white -translate-x-1/2 dark:text-white dark:bg-gray-900">Or continue with</span>
-            </div>
-            <button onClick={handleClickGoogle}
-                className="rounded-full bg-blue-600 px-4 py-1 justify-center items-center w-full text-white">
-                    Google
-            </button> */}
+
         </div>
     )
 }
 
 
 
-const RegistrationForm = () =>  {
+const RegistrationForm = ({setIsLoading}) =>  {
 
     const [formData, setFormData] = useState({
         account: '',
         displayName: '',
         email: '',
-        password: '',
-        repeatPassword: '',
         zip: '',
         phone: '',
         dob: '',
     })
+
+    const [password1, setPassword1] = useState('')
+    const [repeatPassword, setRepeatPassword] = useState('')
 
     const [passwordStatus, setPasswordStatus] = useState(true)
 
@@ -295,49 +223,71 @@ const RegistrationForm = () =>  {
 
     const handleInputChange = (event) => {
         const {id, value} = event.target
-        setFormData({...formData, [id]: value})
-        if (formData.password !== formData.repeatPassword){
+        setFormData((formData) => ({
+            ...formData,
+            [id]: value
+            }))
+        console.log(formData)
+
+
+    }
+
+    const handlePasswordChange = (event) => {
+        const value = event.target.value
+        setPassword1(value)
+        checkTwoPassword(value, repeatPassword)
+    }
+
+    const handleRepeatPasswordChange = (event) => {
+        const value = event.target.value
+        setRepeatPassword(value)
+        checkTwoPassword(password1, value)
+    }
+
+    const checkTwoPassword = (pass, repeatPass) => {
+        if (pass !== repeatPass){
+            setPasswordStatus(false)
             setPasswordStatus(false)
         }
         else{
             setPasswordStatus(true)
+            setPasswordStatus(true)
         }
-
     }
     
 
-    const handSignUp = async () => {
+    const handSignUp = async (e) => {
+        e.preventDefault()
+        setIsLoading(true)
 
         
         const information = {
             username:formData.account,
-            password:formData.password,
+            password:password1,
             displayname: formData.displayName,
             zipcode: formData.zip,
-            // address:{street:passwordInput.value, zipcode:zipInput.value},
             phone: formData.phone,
             email:formData.email,
             dob:formData.dob,
         }
         await axios.post(`${BASE_URL}/register`, information)
         .then(res => {
-            // console.log("data here",res.data)
             dispatch(update_information({information}))
             dispatch(Page_action({type: REGISTER}))
+            alert("Account Created")
             navigate('/main')
-            // console.log(res.data)
             return true
         })
         .catch(error => {
                 //get HTTP error code
             window.alert("Account Exists")
+            setIsLoading(false)
             dispatch(Page_action({type: REGISTER_ERROR}))
-            console.log(error.response.status)
+            // navigate('/')
             return false
             
         })
-        alert("Account Created")
-        navigate('/')
+        
     }
 
     return (
@@ -411,12 +361,12 @@ const RegistrationForm = () =>  {
                 <div>
                     <div className="mb-2 block">
                         <Label
-                            htmlFor="email2"
+                            htmlFor="email"
                             value="Your email"
                         />
                     </div>
                     <TextInput
-                        id="email2"
+                        id="email"
                         value={formData.email}
                         onChange={handleInputChange}
                         type="email"
@@ -436,7 +386,7 @@ const RegistrationForm = () =>  {
                         aria-label="Birthday"
                         value={formData.dob}
                         onChange={handleInputChange}
-                        id="birthday"
+                        id="dob"
                         type="date"
                         required={true}
 
@@ -450,9 +400,9 @@ const RegistrationForm = () =>  {
                         />
                     </div>
                     <TextInput
-                        id="password2"
-                        value={formData.password}
-                        onChange={handleInputChange}
+                        id="password1"
+                        value={password1}
+                        onChange={handlePasswordChange}
                         type="password"
                         required={true}
                     />
@@ -465,15 +415,15 @@ const RegistrationForm = () =>  {
                         />
                     </div>
                     <TextInput
-                        id="repeat-password"
-                        value={formData.repeatPassword}
-                        onChange={handleInputChange}
+                        id="repeatPassword"
+                        value={repeatPassword}
+                        onChange={handleRepeatPasswordChange}
                         type="password"
                         required={true}
                     />
                     <div className="mb-2 block">
                         {
-                            passwordStatus ? <p></p> : <p>Password not match</p>
+                            passwordStatus ? <p></p> : <p class="text-red-600">Password not match</p>
                         }
                     </div>
                 </div>
@@ -481,8 +431,9 @@ const RegistrationForm = () =>  {
                 <div className="flex flex-col justify-center">
 
                     <button  type="submit"
-                            className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                            className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                             disabled={!passwordStatus}
+                            >
                         Sign Up
                     </button>
                 </div>
@@ -494,5 +445,11 @@ const RegistrationForm = () =>  {
     );
 };
 
-
+const LoadingPage = () => {
+    return (
+        <div className="loading-container">
+            <div className="loader"></div>
+        </div>
+    )
+}
 export default MainPage;

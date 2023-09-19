@@ -183,7 +183,7 @@ const Main_Page = () => {
     );
 }
 
-const PostField = ({handleSetSearchPost}) => {
+const PostField = ({handleSetSearchPost, getPost}) => {
 
     const {DisplayName} = useSelector((store) => store.register)
     const dispatch = useDispatch()

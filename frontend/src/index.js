@@ -34,7 +34,8 @@ const Local = () => {
     }
 
     useEffect(() => {
-        initializeLocalStorage()
+        initializeLocalStorage();
+        document.title = "RiceBook";
     }, [])
 
     return (
