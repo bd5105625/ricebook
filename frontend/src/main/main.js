@@ -14,8 +14,8 @@ import { BASE_URL } from "../url";
     
 const Main_Page = () => {
 
-    const {posts,followers,amount, originalPosts, isSearch} = useSelector((store) => store.post)
-    const {Avatar, DisplayName, Account,Page_State, Headline, Following} = useSelector((store) => store.register)
+    const {posts} = useSelector((store) => store.post)
+    const {Avatar, DisplayName, Account, Headline, Following} = useSelector((store) => store.register)
     const dispatch = useDispatch()
     const [query, setQuery] = useState('')
 

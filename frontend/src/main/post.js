@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector,} from 'react-redux'
 import { useState, useEffect } from 'react'
-import { UserPostList,  } from './getdata'
 import './main.css'
 import {Comment} from '../feature/post/comment'
 import { clickComment, clickEdit, editText } from '../feature/post/postSlice'
@@ -15,7 +14,6 @@ import './page.css'
 export function Feed(props) {
     const dispatch = useDispatch()
     const {Account, Avatar ,DisplayName, Following_Avatar} = useSelector((store) => store.register)
-    const [userAvatar, setUserAvatar] = useState([])
 
     const handleChangeText = async (e,index, _id) => {
         let newText = e.target.value
@@ -25,13 +23,9 @@ export function Feed(props) {
     const handleEdit = async (index, _id, newText) => {
         if (props.posts[index].author === DisplayName) {
             dispatch(clickEdit({index:index}))
-            let todo = {
-                _id: _id,
-                newText: newText
-            }
+
             if (props.posts[index].isEdit) {
                 console.log("save!")
-                console.log("newText", newText, _id, props.posts[index].author)
                 await axios.put(`${BASE_URL}/articles/${_id}`, {user: props.posts[index].author ,text:newText})
                 .then((res) => {
                     console.log(res)
@@ -137,21 +131,6 @@ export function Feed(props) {
         )
     }
 }
-
-const items = [...Array(33).keys()];
-
-function Items({ currentItems }) {
-    return (
-        <div className="">
-            {currentItems && currentItems.map((item) => (
-                <div>
-                    <h3>Item #{item}</h3>
-                </div>
-            ))}
-        </div>
-    );
-}
-
 
 export function PaginatedItems({ posts, query, itemsPerPage }){
     const [pageCount, setPageCount] = useState(0);
