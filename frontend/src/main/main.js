@@ -112,8 +112,8 @@ const Main_Page = () => {
         
         <div className='bg-gray-400'>
             <div className="float-container">
-                <div className='bg-white float-child-1 rounded-lg'>
-                    <div>
+                <div className='text_align_center bg-white float-child-1 rounded-lg'>
+                    <div className="grid md:grid-cols-2">
 
                         <div>
                             <Link to={'/'} >
@@ -138,7 +138,7 @@ const Main_Page = () => {
 
                     <div>
                         <img src={Avatar} height="300" width="200"
-                            className="rounded-full h-24 w-24 mx-auto my-0"/>
+                            className="rounded-full h-48 w-48 mx-auto my-0"/>
                             
                     </div>
                     <div>
@@ -155,8 +155,8 @@ const Main_Page = () => {
                         </input>
                     </div>
                     <button id="update_button" type="button" onClick={updateStatus}
-                            className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                            Update Status
+                        className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                        Update Status
                     </button>
                 </div>
                 <div id="write_post" className='bg-white float-child-2 rounded-lg'>

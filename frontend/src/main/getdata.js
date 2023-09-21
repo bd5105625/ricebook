@@ -195,21 +195,21 @@ export const Get_Follower = (props) => {
         <div className="text_align_center">
             {/* font size */}
             <h1 className='text'>Current Following</h1>
-            <div className="grid gap-6 mb-6 md:grid-cols-2">
+            <div className="gap-6 mb-6 ">
                 {curr_Follower_Info.map((user,index) => {
 
                     return (
-                        <div key={index} className="mb-6 ">
+                        <div key={index} className="mb-4">
 
                             
                             <img src={user.avatar} alt='' width="200px"
-                                className="rounded-full h-24 w-24 mx-auto my-0"/>
+                                className="rounded-full h-48 w-48 mx-auto my-0"/>
                             <h1 className='text'>{user.username}</h1>
                             <h5> {user.headline}</h5>
                             <button 
                                 className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
                                 onClick={()=>handleUnFollow(user.username)}>
-                                unfollow
+                                UnFollow
                             </button>
                         </div>
                     )

@@ -103,7 +103,7 @@ const Profile = () => {
 
                             </Link>
                         <img id="avatar" src={Avatar} height="300" width="200" alt=""
-                            className="rounded-full h-24 w-24 mx-auto my-3"/>
+                            className="rounded-full h-48 w-48 mx-auto my-3"/>
                         
 
                             <input 
@@ -118,7 +118,7 @@ const Profile = () => {
                         </div>
                     </div>
                     <form>
-                        <div className="grid gap-6 mb-6 md:grid-cols-2">
+                        <div className="text_align_center">
                             <div>
                                 <h2 className={'text-center'}>
                                     {/*Your Current Information*/}
@@ -133,12 +133,12 @@ const Profile = () => {
 
                     </form>
                 </div>
-                <div className='bg-white float-child rounded-lg'>
+                <div className='text_align_center bg-white float-child rounded-lg'>
                     <form id="update_Form" onSubmit={UpdateInformation}>
-                        <div className="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
-                                <h2 className='text-center'>Update Your Information</h2>
+                                <h5 className='text-center'>Update Your Information</h5>
                             </div>
+                        <div className="grid gap-6 mb-6 md:grid-cols-1">
                             <div>
                                 <label htmlFor="Zip_update"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">

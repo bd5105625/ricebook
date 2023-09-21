@@ -155,7 +155,7 @@ export function PaginatedItems({ posts, query, itemsPerPage }){
     return (
         <>
         {/* <Items currentItems={currentItems} /> */}
-        <div className='mx-auto'>
+        <div className='mx-auto '>
 
             <ReactPaginate
                 nextLabel="next >"

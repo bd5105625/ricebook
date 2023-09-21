@@ -1,5 +1,5 @@
 import React from "react";
-import { Label, TextInput} from "flowbite-react";
+import { Label} from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
 import {information} from "./newuser";
@@ -20,8 +20,11 @@ const MainPage = () => {
     }
 
     return (
-
+        
+        <>
+        
         <div className="">
+            
             <div className="">
                 <nav className="py-4 container flex flex-wrap justify-between items-center mx-auto">
                     <a className="flex items-center">
@@ -38,9 +41,9 @@ const MainPage = () => {
                     </div>
 
                 </nav>
-                <div className="float-landing-container container w-1/2 mx-auto rounded-xl   p-8 m-10 bg-white">
+                <div className="float-landing-container container w-1/2 mx-auto rounded-xl  p-8 m-10 bg-white">
                     { status ? 
-                        (isLoading ? <LoadingPage /> : <LoginForm setIsLoading={setIsLoading}/>)
+                        (isLoading ? <LoadingPage /> : <LoginForm setIsLoading={setIsLoading} setStatus={handleButton}/>)
                         :                         
                         (isLoading ? <LoadingPage /> : <RegistrationForm setIsLoading={setIsLoading}/>)
                     }
@@ -48,11 +51,12 @@ const MainPage = () => {
 
             </div>
         </div>
+        </>
 
 
     )
 }
-const LoginForm = ({setIsLoading}) => {
+const LoginForm = ({setIsLoading, setStatus}) => {
 
     const [formData, setFormData] = useState({
         account: '',
@@ -63,19 +67,6 @@ const LoginForm = ({setIsLoading}) => {
     const dispatch = useDispatch()
 
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-    //     let pass = clickLogin()
-
-    //     console.log(pass)
-    //     if (pass){
-    //         dispatch(Page_action({type: LOGIN}))
-    //         navigate('/main')
-    //     }
-    //     else{
-    //         dispatch(Page_action({type: LOGIN_ERROR}))
-    //     }
-    // }
 
     const updateUserInformation =  async () => {
         await axios.get(`${BASE_URL}/profile`)
@@ -143,58 +134,52 @@ const LoginForm = ({setIsLoading}) => {
     }
 
     return (
-        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-
-            <form className="flex flex-col gap-4" onSubmit={(event)=>{clickLogin(event)}}>
+        // <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
+        <div className="flex min-h-full items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
+            <div className="w-full max-w-md space-y-8">
                 <div>
-                    <div className="mb-2 block">
-                        <Label
-                            htmlFor="account1"
-                            value="Your account name"
+                    <h3 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in</h3>
+                    {/* <p className="mt-2 text-center text-sm text-gray-600">
+                        Not yet an user?
+                        <a onClick={} href="/" className="font-medium text-indigo-600 hover:text-indigo-500"> Sign up </a>
+                    </p> */}
+                </div>
+
+                <form className="flex flex-col gap-4" method="POST" onSubmit={(event)=>{clickLogin(event)}}>
+                    <div className="-space-y-px rounded-md  pb-1">
+                        <span className="mt-2 text-center text-sm "> Username </span>
+                        <input
+                            className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            id="account1"
+                            value={formData.account}
+                            onChange={(event) => setFormData({...formData, account: event.target.value})}
+                            type="text"
+                            required={true}
+                            // pattern="/^[A-Za-z0-9]{0,}/i"
+                        />
+                    </div>
+                    <div className="-space-y-px rounded-md pb-1">
+                        <span className="mt-2 text-center text-sm "> Password </span>
+                        <input
+                            className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            id="password1"
+                            value={formData.password}
+                            onChange={(event) => setFormData({...formData, password: event.target.value})}
+                            type="password"
+                            required={true}
                             />
                     </div>
-                    <TextInput
-                        id="account1"
-                        value={formData.account}
-                        onChange={(event) => setFormData({...formData, account: event.target.value})}
-                        type="text"
-                        placeholder="TomCruise"
-                        required={true}
-                        
-                        />
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label
-                            htmlFor="password1"
-                            value="Your password"
-                            />
+                    <div className="flex flex-col justify-center">
+                        {/*<Link to={'/main'}>*/}
+                            <button type="submit"
+                                    // className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                    className="rounded-full bg-gray-400 px-4 py-2 hover:bg-gray-600 focus:ring-5 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                                Login
+                            </button>
+                        {/*</Link>*/}
                     </div>
-                    <TextInput
-                        id="password1"
-                        value={formData.password}
-                        onChange={(event) => setFormData({...formData, password: event.target.value})}
-                        type="password"
-                        required={true}
-                        />
-                </div>
-
-
-                <div className="flex flex-col justify-center">
-                    {/*<Link to={'/main'}>*/}
-                        <button type="submit"
-                                // className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                                className="rounded-full bg-gray-400 px-4 py-2 hover:bg-gray-600 focus:ring-5 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-
-                            Login
-
-                        </button>
-                    {/*</Link>*/}
-                </div>
-                
-
-            </form>
-
+                </form>
+            </div>
         </div>
     )
 }
@@ -275,7 +260,7 @@ const RegistrationForm = ({setIsLoading}) =>  {
             dispatch(update_information({information}))
             dispatch(Page_action({type: REGISTER}))
             alert("Account Created")
-            navigate('/main')
+            navigate('/')
             return true
         })
         .catch(error => {
@@ -291,156 +276,137 @@ const RegistrationForm = ({setIsLoading}) =>  {
     }
 
     return (
-        <div className="bg-white flex mx-auto space-x-5 px-16 pt-20">
-
-        <div className="flex flex-col items-center justify-center">
-            <form className="flex flex-col gap-2" onSubmit={handSignUp}>
+        <div className="flex min-h-full items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
+            <div className="w-full max-w-md space-y-8">
                 <div>
-                    <div className="mb-2 block">
-                        <Label
-                            htmlFor="account"
-                            value="Account"
-                        />
-                    </div>
-                    <TextInput
-                        id="account"
-                        value={formData.account}
-                        onChange={handleInputChange}
-                        placeholder="Account"
-                        required={true}
-                    />
+                    <h3 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Register</h3>
+                    {/* <p className="mt-2 text-center text-sm text-gray-600">
+                        Not yet an user?
+                        <a onClick={} href="/" className="font-medium text-indigo-600 hover:text-indigo-500"> Sign up </a>
+                    </p> */}
                 </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label
-                            htmlFor="displayname"
-                            value="Display Name"
-                        />
-                    </div>
-                    <TextInput
-                        id="displayName"
-                        value={formData.displayName}
-                        onChange={handleInputChange}
-                        placeholder="Display Name"
-                        required={true}
+                <form className="mt-8 space-y-6" onSubmit={handSignUp}>
+                    <div className=" rounded-md pb-1">
+                        <div className="grid grid-cols-2 gap-6">
+                            <div>
+                                <Label htmlFor="account" value="Account" />
+                                <input
+                                    className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    value={formData.account}
+                                    type="text"
+                                    onChange={handleInputChange}
+                                    placeholder="Account"
+                                    required={true} />
+                            </div>
+                            <div>
+                                <Label htmlFor="displayname" value="Display Name"/>
+                                <input
+                                    className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    id="displayName"
+                                    type="text"
+                                    value={formData.displayName}
+                                    onChange={handleInputChange}
+                                    placeholder="Display Name"
+                                    required={true}
+                                    />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-6">
+                            <div>
+                                <Label htmlFor="zip" value="ZipCode"/>
+                                <input
+                                    className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"                                    id="zip"
+                                    value={formData.zip}
+                                    onChange={handleInputChange}
+                                    type="text"
+                                    placeholder="77005"
+                                    required={true}
+                                    pattern="[0-9]{5}"
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="Phone" value="Phone Number" />
+                                <input
+                                    className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    id="phone"
+                                    type="text"
+                                    value={formData.phone}
+                                    onChange={handleInputChange}
+                                    placeholder="123-456-7890"
+                                    required={true}
+                                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-6">
+                            <div>
+                                <div className="mb-2 block">
+                                    <Label htmlFor="email" value="Your email"/>
+                                </div>
+                                <input
+                                    className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"                                    id="email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    type="email"
+                                    placeholder="name@ricebook.com"
+                                    required={true}
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="email2" value="Birthday"/>
+                                <input
+                                    className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    value={formData.dob}
+                                    onChange={handleInputChange}
+                                    id="dob"
+                                    type="date"
+                                    required={true}
+                                />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-6">
 
-                    />
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label
-                            htmlFor="zip"
-                            value="Zipcode"
-                        />
+                            <div>
+                                <Label htmlFor="password2" value="Your password"/>
+                                <input
+                                    className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    id="password1"
+                                    value={password1}
+                                    onChange={handlePasswordChange}
+                                    type="password"
+                                    required={true}
+                                />
+                            </div>
+                            
+                            <div>
+                                <Label htmlFor="repeat-password" value="Repeat password"/>
+                                <input
+                                    className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    id="repeatPassword"
+                                    value={repeatPassword}
+                                    onChange={handleRepeatPasswordChange}
+                                    type="password"
+                                    required={true}
+                                />
+                                <div className="mb-2 block">
+                                    {
+                                        passwordStatus ? <p></p> : <p class="text-red-600">Password not match</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <TextInput
-                        id="zip"
-                        value={formData.zip}
-                        onChange={handleInputChange}
-                        placeholder="77005"
-                        required={true}
-                        pattern="[0-9]{5}"
-                    />
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label
-                            htmlFor="Phone"
-                            value="Phone Number"
-                        />
-                    </div>
-                    <TextInput
-                        id="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        placeholder="123-456-7890"
-                        required={true}
-                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    />
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label
-                            htmlFor="email"
-                            value="Your email"
-                        />
-                    </div>
-                    <TextInput
-                        id="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        type="email"
-                        placeholder="name@ricebook.com"
-                        required={true}
+                    <div className="flex flex-col justify-center">
 
-                    />
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label
-                            htmlFor="email2"
-                            value="Birthday"
-                        />
+                        <button  type="submit"
+                                    className="rounded-full bg-gray-400 px-4 py-2 hover:bg-gray-600 focus:ring-5 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                                    disabled={!passwordStatus}
+                                >
+                            Sign Up
+                        </button>
                     </div>
-                    <TextInput
-                        aria-label="Birthday"
-                        value={formData.dob}
-                        onChange={handleInputChange}
-                        id="dob"
-                        type="date"
-                        required={true}
-
-                    />
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label
-                            htmlFor="password2"
-                            value="Your password"
-                        />
-                    </div>
-                    <TextInput
-                        id="password1"
-                        value={password1}
-                        onChange={handlePasswordChange}
-                        type="password"
-                        required={true}
-                    />
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label
-                            htmlFor="repeat-password"
-                            value="Repeat password"
-                        />
-                    </div>
-                    <TextInput
-                        id="repeatPassword"
-                        value={repeatPassword}
-                        onChange={handleRepeatPasswordChange}
-                        type="password"
-                        required={true}
-                    />
-                    <div className="mb-2 block">
-                        {
-                            passwordStatus ? <p></p> : <p class="text-red-600">Password not match</p>
-                        }
-                    </div>
-                </div>
-
-                <div className="flex flex-col justify-center">
-
-                    <button  type="submit"
-                            className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                            disabled={!passwordStatus}
-                            >
-                        Sign Up
-                    </button>
-                </div>
-            </form>
-
-
-        </div>
+                </form>
+            </div>
         </div>
     );
 };
