@@ -3,7 +3,7 @@ import { Label} from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
 import {information} from "./newuser";
-import {UserList, UserNameList} from '../main/getdata'
+// import {UserList, UserNameList} from '../main/follower'
 import { useDispatch } from "react-redux";
 import { update_information,Page_action, LOGIN, LOGIN_ERROR, REGISTER, REGISTER_ERROR } from "../feature/register/registerSlice";
 import axios from "axios";
@@ -45,7 +45,7 @@ const MainPage = () => {
                     { status ? 
                         (isLoading ? <LoadingPage /> : <LoginForm setIsLoading={setIsLoading} setStatus={handleButton}/>)
                         :                         
-                        (isLoading ? <LoadingPage /> : <RegistrationForm setIsLoading={setIsLoading}/>)
+                        (isLoading ? <LoadingPage /> : <RegistrationForm setIsLoading={setIsLoading} setStatus={handleButton}/>)
                     }
                 </div>
 
@@ -186,7 +186,7 @@ const LoginForm = ({setIsLoading, setStatus}) => {
 
 
 
-const RegistrationForm = ({setIsLoading}) =>  {
+const RegistrationForm = ({setIsLoading, setStatus}) =>  {
 
     const [formData, setFormData] = useState({
         account: '',
@@ -260,6 +260,8 @@ const RegistrationForm = ({setIsLoading}) =>  {
             dispatch(update_information({information}))
             dispatch(Page_action({type: REGISTER}))
             alert("Account Created")
+            setStatus()
+            setIsLoading(false)
             navigate('/')
             return true
         })
@@ -292,6 +294,7 @@ const RegistrationForm = ({setIsLoading}) =>  {
                                 <Label htmlFor="account" value="Account" />
                                 <input
                                     className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    id="account"
                                     value={formData.account}
                                     type="text"
                                     onChange={handleInputChange}

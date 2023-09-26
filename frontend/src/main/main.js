@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import './main.css'
-import { Get_Follower } from './getdata'
+import { Get_Follower } from './follower'
 import { PaginatedItems} from './post'
 import { useDispatch, useSelector } from "react-redux";
 import { addPost, updatePost, update} from "../feature/post/postSlice";

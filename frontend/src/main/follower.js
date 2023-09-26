@@ -216,15 +216,16 @@ export const Get_Follower = (props) => {
                 })}
             </div>
             <div>
-                <div className="mb-6">
-                    <input type="text" id="follower-input" value={newfollowerName} onChange={(e)=>setNewfollowerName(e.target.value)}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
-                </div>
+                <div className="w-full flex justify-center mt-8 mb-4 space-x-2">
+                    <input type="text" id="follower-input" value={newfollowerName} onChange={(e)=>setNewfollowerName(e.target.value)} placeholder={"Username"}
+                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
 
-                <button type="button" id="add_follower" onClick={Addnewfollower}
-                        className="w-full text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                            Add
-                </button>
+                    <button type="button" id="add_follower" onClick={Addnewfollower}
+                            // className="px-6 text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                            className="inline-block px-6 py-2.5 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out">
+                                Add
+                    </button>
+                </div>
             </div>
             
         </div>
