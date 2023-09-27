@@ -1,14 +1,15 @@
 import React from 'react'
 import { useDispatch, useSelector,} from 'react-redux'
 import { useState, useEffect } from 'react'
-import './main.css'
-import {Comment} from '../feature/post/comment'
-import { clickComment, clickEdit, editText } from '../feature/post/postSlice'
+import './../main.css'
+import {Comment} from '../../feature/post/comment'
+import { clickComment, clickEdit, editText } from '../../feature/post/postSlice'
 import axios from 'axios'
 import ReactPaginate from 'react-paginate'
 
-import { BASE_URL } from '../url'
+import { BASE_URL } from '../../url'
 import './page.css'
+import './pagination.css'
 
 
 export function Feed(props) {
@@ -81,11 +82,13 @@ export function Feed(props) {
             <div>
                 {filterPosts.map((post, index) => {
                     return (
-                        <div key={index} className=" comment_style rounded-lg bg-white">
+                        <div key={index} className=" comment_style my-4 bg-white rounded-lg border shadow-md dark:bg-gray-800 dark:border-gray-700">
 
-                            <div className='my-3 flex items-center '>
+                            <div className='flex flex-1 w-100 my-3 items-center '>
                                 {testAvatar(post.author)}
-                                <h1 className='mx-auto'>{post.author}</h1>
+                                <div className='ml-2'>
+                                    <span>{post.author}</span>
+                                </div>
                             </div>
                             <div className=''>
                                 {post.isEdit ? (
@@ -105,14 +108,14 @@ export function Feed(props) {
                                         // test()
                                     }}
                                     id="edit"
-                                    className="text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                                    className="text-black bg-gray-200 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                                     {post.isEdit ? "Save" : "Edit"}
                                 </button>
 
                                 <button onClick={()=>{
                                     dispatch(clickComment({index}))
                                 }}
-                                className="text-black bg-gray-200 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                                className="text-black bg-gray-200 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                                 { post.isComment ? "Hide Comment" : "Show Comment" }
                                 </button>
                             </div>
@@ -155,9 +158,9 @@ export function PaginatedItems({ posts, query, itemsPerPage }){
     return (
         <>
         {/* <Items currentItems={currentItems} /> */}
-        <div className='mx-auto '>
+        <div className='mt-6 mx-10 '>
 
-            <ReactPaginate
+            <ReactPaginate className=''
                 nextLabel="next >"
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={3}
