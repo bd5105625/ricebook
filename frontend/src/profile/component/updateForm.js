@@ -31,7 +31,6 @@ export const UpdateForm = () => {
             return
         }
         formData.append("image", imagefile.files[0]);
-        console.log("form data", formData)
         await axios.post(`${BASE_URL}/avatar`, formData, {
             headers: {
             'Content-Type': 'multipart/form-data'
@@ -62,9 +61,6 @@ export const UpdateForm = () => {
             ...formData,
             [id]: value
             }))
-        console.log(formData)
-
-
     }
 
     const handlePasswordChange = (event) => {
@@ -120,27 +116,9 @@ export const UpdateForm = () => {
                     phone: Phone,
                     dob: DOB,
                 })
-                // alert("Information updated")
                 alert("Information updated")
             })
         
-        console.log("new form data", formData)
-
-
-
-        // if (pass1.value !== pass2.value) {
-        //     alert("Password not match")
-        //     return
-        // }
-        // else if (pass1.value !== "" && pass2.value !== "") {
-        //     let new_password = {
-        //         password: pass1.value
-        //     }
-        //     await axios.put(`${BASE_URL}/password`, new_password)
-        //         .then((res) => {
-        //             // alert("Password updated")
-        //         })
-        // }
         
 
     }
@@ -261,7 +239,7 @@ export const UpdateForm = () => {
                 <div className="flex flex-col justify-center">
 
                     <button  
-                                className="rounded-full bg-gray-200 px-4 py-2 hover:bg-gray-400 focus:ring-5 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                                className="rounded-full mb-4 bg-gray-200 px-4 py-2 hover:bg-gray-400 focus:ring-5 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm  sm:w-auto text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
                                 disabled={!passwordStatus}
                             >
                         Update
@@ -273,10 +251,4 @@ export const UpdateForm = () => {
     )
 
 };
-
-export const TestForm = () => {
-    return (
-        <div><h1>123</h1></div>
-    )
-}
 export default UpdateForm;

@@ -26,7 +26,6 @@ export function Feed(props) {
             dispatch(clickEdit({index:index}))
 
             if (props.posts[index].isEdit) {
-                console.log("save!")
                 await axios.put(`${BASE_URL}/articles/${_id}`, {user: props.posts[index].author ,text:newText})
                 .then((res) => {
                     console.log(res)

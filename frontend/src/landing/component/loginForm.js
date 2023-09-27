@@ -43,7 +43,6 @@ export const LoginForm = ({setIsLoading, setStatus}) => {
                 }
             })
         dispatch(Page_action({type:"LOGIN"}))
-
     }
 
     const clickLogin = async (e) =>{
@@ -57,27 +56,23 @@ export const LoginForm = ({setIsLoading, setStatus}) => {
         }
         information.Account = formData.account
         information.Password = formData.password
-        // await axios.post('http://localhost:3000/login', todo,  { credentials: true })
-        await axios.post(`${BASE_URL}/login`, todo)  
-            .then(res => {
+        try {
 
-                if (res.data.result === "login success"){
-                    // store username to cookie
-                    updateUserInformation()
-                    dispatch(Page_action({type: LOGIN}))
-                    navigate('/main')
-                    return true
-                }
-            })
-            .catch(error => {
-                window.alert("Wrong Account or password")
-                setIsLoading(false)
-                dispatch(Page_action({type: LOGIN_ERROR}))
-                return false
-
-            })
-
-
+            const res = await axios.post(`${BASE_URL}/login`, todo)  
+            if (res.data.result === "login success"){
+                // store username to cookie
+                await updateUserInformation()
+                dispatch(Page_action({type: LOGIN}))
+                navigate('/main')
+                return true
+            }
+            
+        } catch (error) {
+            window.alert("Wrong Account or password")
+            setIsLoading(false)
+            dispatch(Page_action({type: LOGIN_ERROR}))
+            return false
+        }
     }
 
     const handleClickGoogle = async () => {

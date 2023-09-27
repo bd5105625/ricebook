@@ -10,7 +10,6 @@ export const Personal = () => {
     const { Avatar, DisplayName, Headline } = useSelector((store) => store.register)
     const [statusText, setStatusText] = useState(Headline)
     const [editStatus, setEditStatus] = useState(false)
-
     const updateStatus = async () => {
         setEditStatus(!editStatus)
         let todo = {
@@ -20,12 +19,9 @@ export const Personal = () => {
         .then((res) => {
             // console.log("output displayname", document.cookie.split('=')[1])
             dispatch(new_status(statusText))
-            setStatusText('')
         })
     }
-    useEffect(() => {
-        setStatusText(Headline)
-    }, [])
+    
 
     return (
         <div className='mx-10 mt-10 mb-auto text_align_center bg-white col-span-2 bg-white rounded-lg border shadow-md dark:bg-gray-800 dark:border-gray-700'>

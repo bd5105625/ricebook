@@ -28,11 +28,7 @@ export let UserPasswordList = []
 export let UserPostList = []
 export let CurrentFollower = []
 export let UserInformation = []
-// const FollowerState = {
-//     people: await UserList(),
-//     headline: '',
-    
-// }
+
 
 export const GetAllData = (props) => {
 
@@ -126,10 +122,6 @@ export const Get_Follower = (props) => {
         InitialFollower();
     },[])
 
-    useEffect(() => {
-
-    },[curr_Follower])
-
     const Addnewfollower = async () => {
         let new_follower = newfollowerName
         let temp1 = curr_Follower
@@ -190,7 +182,6 @@ export const Get_Follower = (props) => {
 
     return (
         <div className="mt-2">
-            {/* font size */}
             <h1 className='text mb-6'>Contacts</h1>
             <div className=" ">
                 <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
