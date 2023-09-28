@@ -12,9 +12,9 @@ export const UpdateForm = () => {
     const {Account, Avatar, DOB, DisplayName, ZipCode, Phone, Email, Password} = useSelector((state)=>state.register)
     const [formData, setFormData] = useState({
         account: Account,
-        displayName: DisplayName,
+        displayname: DisplayName,
         email: Email,
-        zip: ZipCode,
+        zipcode: ZipCode,
         phone: Phone,
         dob: DOB,
     })
@@ -98,24 +98,25 @@ export const UpdateForm = () => {
             }
             await axios.put(`${BASE_URL}/password`, new_password)
                 .then((res) => {
+                    console.log("in changed password")
                     alert("Password updated")
                 })
         }
         handleUploadAvatar()
-
+        console.log("in update information", formData)
         await axios.put(`${BASE_URL}/profile`, {...formData, user: Account})
             .then((res) => {
                 console.log("in update information", formData)
                 // window.localStorage.setItem("userInformation", JSON.stringify(res.data))
                 dispatch(update_information(formData))
-                setFormData({
-                    account: Account,
-                    displayName: DisplayName,
-                    email: Email,
-                    zip: ZipCode,
-                    phone: Phone,
-                    dob: DOB,
-                })
+                // setFormData({
+                //     account: Account,
+                //     displayname: DisplayName,
+                //     email: Email,
+                //     zipcode: ZipCode,
+                //     phone: Phone,
+                //     dob: DOB,
+                // })
                 alert("Information updated")
             })
         
@@ -150,9 +151,9 @@ export const UpdateForm = () => {
                             <Label htmlFor="displayname" value="Display Name"/>
                             <input
                                 className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                id="displayName"
+                                id="displayname"
                                 type="text"
-                                value={formData.displayName}
+                                value={formData.displayname}
                                 onChange={handleInputChange}
                                 placeholder="Display Name"
                                 />
@@ -162,8 +163,9 @@ export const UpdateForm = () => {
                         <div>
                             <Label htmlFor="zip" value="ZipCode"/>
                             <input
-                                className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"                                    id="zip"
-                                value={formData.zip}
+                                className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" 
+                                id="zipcode"
+                                value={formData.zipcode}
                                 onChange={handleInputChange}
                                 type="text"
                                 placeholder="77005"
@@ -187,7 +189,7 @@ export const UpdateForm = () => {
                         <div>
                                 <Label htmlFor="email" value="Your email"/>
                             <input
-                                className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"                                    id="email"
+                                className="relative block w-full appearance-none  rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" id="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
                                 type="email"
